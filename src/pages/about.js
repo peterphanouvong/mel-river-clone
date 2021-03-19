@@ -165,7 +165,7 @@ const About = () => {
             </div>
             <div className="s-team-list">
               {team.map((member, i) => {
-                const img = require(`../assets/faces/face-${i}.jpg`);
+                // const img = require(`../assets/faces/face-${i}.jpg`);
                 return (
                   <div className="s-team-member">
                     <div className={`face-img face-img-${i}`}></div>
