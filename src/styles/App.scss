@@ -4,9 +4,13 @@
 @import "./components/header.scss";
 @import "./components/banner.scss";
 @import "./components/cases.scss";
+@import "./components/intro-overlay.scss";
+@import "./components/navigation.scss";
+@import "./components/about.scss";
 
 body,
 html {
+  visibility: hidden;
   user-select: none;
   background: $white;
   overscroll-behavior: none;
@@ -16,29 +20,50 @@ html {
     "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  // overflow-x: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+a {
+  text-decoration: none;
 }
 
 .container {
-  width: 1560px;
-  min-width: 1560px;
+  width: 77%;
   margin: 0 auto;
   height: 100%;
-  @include media("<=1560px") {
-    width: 1280px;
-    min-width: 1280px;
-  }
-  @include media("<=desktop") {
-    width: 1080px;
-    min-width: 1080px;
-  }
-  @include media("<=1080px") {
-    width: 100%;
+
+  @include media("<=tablet") {
+    width: 95%;
     min-width: 100%;
   }
   .row {
     display: flex;
     height: 100%;
-    padding: 0 32px;
     @include media("<=phone") {
       padding: 0 16px;
     }
@@ -58,4 +83,42 @@ html {
     display: flex;
     height: 100%;
   }
+}
+
+.App {
+  background: white;
+}
+
+.page {
+  width: 100%;
+  height: 100vh;
+  // background: $white;
+  .row {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.content-section {
+  z-index: 2;
+  transform: translateY(0);
+  position: relative;
+  overflow: hidden;
+  background: $white;
+}
+
+.a-scroll {
+  z-index: 1;
+  background: #fff;
+  position: relative;
+  will-change: transform;
+}
+
+.page-overlay {
+  width: 100%;
+  height: 0;
+  top: 0;
+  position: absolute;
+  z-index: 10;
+  background: $black;
 }

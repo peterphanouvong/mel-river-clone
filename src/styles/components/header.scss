@@ -1,0 +1,53 @@
+.logo {
+  top: 2.083vw;
+  left: 11.458vw;
+  position: fixed;
+  z-index: 5;
+  // background: #000;
+  mix-blend-mode: exclusion;
+
+  a {
+    // color: black;
+    color: white;
+    letter-spacing: 0.5rem;
+    font-weight: 700;
+
+    @include media("<=tablet") {
+      top: 4vw;
+      left: 4vw;
+    }
+  }
+}
+.nav-toggle {
+  cursor: pointer;
+  top: 2.083vw;
+  right: 11.458vw;
+  z-index: 5;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  mix-blend-mode: exclusion;
+
+  @include media("<=tablet") {
+    top: 4vw;
+    left: 4vw;
+  }
+
+  .hamburger-menu {
+    width: 25px;
+    span {
+      margin-bottom: 6px;
+      background: white;
+      height: 2px;
+      width: 100%;
+      display: block;
+    }
+    .menu-top span {
+      transform: translateY(4px) rotate(45deg);
+    }
+    .menu-bot span {
+      transform: translateY(-4px) rotate(135deg);
+    }
+  }
+}
