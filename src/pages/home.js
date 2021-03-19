@@ -1,49 +1,71 @@
 import React, { useEffect, useState } from "react";
-import IntroOverlay from "../components/introOverlay";
-import Banner from "../components/banner";
-import Cases from "../components/cases";
+
+// GSAP
 import gsap from "gsap";
+import { motion } from "framer-motion";
 
-let tl = gsap.timeline();
+// Components
+import Banner from "../components/Banner";
+import Cases from "../components/Cases";
+import IntroOverlay from "../components/IntroOverlay";
+import CaseOverlay from "../components/CaseOverlay";
 
-const homeAnimation = completeAnimation => {
-  tl.from(".line span", 1.8, {
-    y: 100,
-    ease: "power4.out",
+const tl = gsap.timeline();
+
+const homeAnimation = (completeAnimation) => {
+  tl.from(".line span", {
+    duration: 1.2,
+    y: "5vw",
+    ease: "power3.out",
     delay: 1,
-    skewY: 7,
+    skewY: 5,
     stagger: {
-      amount: 0.3
-    }
+      amount: 0.3,
+    },
   })
-    .to(".overlay-top", 1.6, {
+    .to(".overlay-top", {
+      duration: 1.5,
       height: 0,
       ease: "expo.inOut",
-      stagger: 0.4
+      stagger: {
+        amount: 0.4,
+      },
     })
-    .to(".overlay-bottom", 1.6, {
+    .to(".overlay-bottom", {
+      duration: 1.5,
       width: 0,
       ease: "expo.inOut",
       delay: -0.8,
       stagger: {
-        amount: 0.4
-      }
+        amount: 0.4,
+      },
     })
-    .to(".intro-overlay", 0, {
-      css: { display: "none" }
-    })
-    .from(".case-image img", 1.6, {
+    .to(".intro-overlay", { duration: 0, css: { display: "none" } })
+    .from(".case-image img", {
+      duration: 1.6,
       scale: 1.4,
       ease: "expo.inOut",
-      delay: -2,
+      delay: -1.8,
       stagger: {
-        amount: 0.4
+        amount: 0.4,
       },
-      onComplete: completeAnimation
+      onComplete: completeAnimation,
     });
 };
 
-const Home = ({ dimensions }) => {
+const pageVariants = {
+  initial: {
+    opacity: 0,
+  },
+  in: {
+    opacity: 1,
+  },
+  out: {
+    opacity: 0,
+  },
+};
+
+const Home = () => {
   const [animationComplete, setAnimationComplete] = useState(false);
 
   const completeAnimation = () => {
@@ -53,18 +75,19 @@ const Home = ({ dimensions }) => {
   useEffect(() => {
     homeAnimation(completeAnimation);
   }, []);
-
-  useEffect(() => {
-    let vh = dimensions.height * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }, [dimensions.width]);
-
   return (
-    <>
-      {animationComplete === false ? <IntroOverlay /> : ""}
+    <div
+      // initial="initial"
+      // animate="in"
+      // exit="out"
+      // variants={pageVariants}
+      className="home"
+    >
+      {!animationComplete && <IntroOverlay />}
       <Banner />
       <Cases />
-    </>
+      <CaseOverlay />
+    </div>
   );
 };
 

@@ -1,50 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-import { ReactComponent as UpArrow } from "../assets/up-arrow-circle.svg";
+import React, { useState, useEffect } from "react";
+import { NavLink, withRouter } from "react-router-dom";
 import { openMenu, closeMenu } from "../animations/menuAnimations";
+import { useHistory } from "react-router-dom";
 
-// Define reducer
+const Header = ({ dimensions }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const history = useHistory();
 
-const Header = ({ history, dimensions }) => {
-  const [menuState, setMenuState] = useState({ menuOpened: false });
+  useEffect(() => {
+    return history.listen((location) => {
+      setMenuOpen(false);
+    });
+  }, [history]);
+
   useEffect(() => {
     //Listening for page changes.
-    history.listen(() => {
-      setMenuState({ menuOpened: false });
-    });
-    if (menuState.menuOpened === true) {
+    if (menuOpen === true) {
       openMenu(dimensions.width);
-    } else if (menuState.menuOpened === false) {
+    } else if (menuOpen === false) {
       closeMenu();
     }
-  });
+  }, [menuOpen]);
 
   return (
-    <div className='header'>
-      <div className='container'>
-        <div className='row v-center space-between'>
-          <div className='logo'>
-            <NavLink to='/' exact>
-              AGENCY
-            </NavLink>
+    <>
+      <div className="logo">
+        <NavLink exact to="/">
+          <h3>AGENCY.</h3>
+        </NavLink>
+      </div>
+      <div className="nav-toggle">
+        <div className="hamburger-menu" onClick={() => setMenuOpen(!menuOpen)}>
+          <div className="menu-top">
+            <span></span>
           </div>
-          <div className='nav-toggle'>
-            <div
-              onClick={() => setMenuState({ menuOpened: true })}
-              className='hamburger-menu'>
-              <span></span>
-              <span></span>
-            </div>
-            <div
-              className='hamburger-menu-close'
-              onClick={() => setMenuState({ menuOpened: false })}>
-              <UpArrow />
-            </div>
+          <div className="menu-bot">
+            <span></span>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
+
 export default withRouter(Header);
